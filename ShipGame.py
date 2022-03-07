@@ -88,7 +88,6 @@ class ShipGame:
 
         """
 
-
         # Check first player board
         if player == 'first':
             col_num = ''
@@ -102,19 +101,19 @@ class ShipGame:
             if orientation == 'R':
                 if len(coord) == 2:
                     col_num = coord[1]
-                    if (int(col_num) + ship_length) > 10:
+                    if (int(col_num) + ship_length) > 11:
                         return False
                 elif len(coord) == 3:
                     if coord[1] == 1 and coord[2] == 0:
                         col_num = 10
-                        if col_num + ship_length > 10:
+                        if col_num + ship_length > 11:
                             return False
             if orientation == 'C':
                 dict_of_values = {'A':1, 'B':2, 'C':3, 'D':4, 'E':5, 'F':6, 'G':7, 'H':8, 'I':9, 'J':10}
                 row_num = coord[0]
                 if row_num in dict_of_values:
                     value = dict_of_values.get(row_num)
-                    if value + ship_length > 10:
+                    if value + ship_length > 11:
                         return False
 
             # Check for overlap using coordinate
@@ -359,7 +358,7 @@ class ShipGame:
                     element_counter_two += 1
                 element_counter_one += 1
 
-
+        return False
 
 
     def get_num_ships_remaining(self, player):
