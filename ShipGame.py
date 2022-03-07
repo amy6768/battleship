@@ -326,7 +326,6 @@ class ShipGame:
         # Check to see if correct player turn
         print("Players turn is: " + self.get_players_turn())
         if player != self.get_players_turn():
-            print("Not your turn!")
             return False
 
         # Check to see if coord is in second player board
@@ -350,8 +349,6 @@ class ShipGame:
             element_counter_one = 0
             element_counter_two = 0
             for ship in self._first_player_board:
-                print("element counter: " + str(element_counter_one))
-                print("element counter: " + str(element_counter_two))
                 for ship_coord in ship:
                     if coord == ship_coord:
                         del self._first_player_board[element_counter_one][element_counter_two]
