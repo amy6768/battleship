@@ -350,9 +350,11 @@ class ShipGame:
             element_counter_one = 0
             element_counter_two = 0
             for ship in self._first_player_board:
+                print("element counter: " + str(element_counter_one))
+                print("element counter: " + str(element_counter_two))
                 for ship_coord in ship:
                     if coord == ship_coord:
-                        del self._second_player_board[element_counter_one][element_counter_two]
+                        del self._first_player_board[element_counter_one][element_counter_two]
                         self._players_turn = 'first'
                         if len(self._first_player_board) == 0:
                             self._current_state = 'SECOND_WON'
@@ -360,7 +362,7 @@ class ShipGame:
                     element_counter_two += 1
                 element_counter_one += 1
 
-        return False
+
 
 
     def get_num_ships_remaining(self, player):
@@ -399,6 +401,8 @@ def main():
     print(game.fire_torpedo('first', 'B1'))
     print(game.get_second_player_board())
     print(game.get_players_turn())
+    print(game.fire_torpedo('second', 'C4'))
+    print(game.get_first_player_board())
 
 if __name__ == '__main__':
     main()
