@@ -87,6 +87,8 @@ class ShipGame:
         True - ship is placed on board after criteria is checked
 
         """
+
+
         # Check first player board
         if player == 'first':
             col_num = ''
@@ -282,14 +284,6 @@ class ShipGame:
             print(self._second_player_board)
             return True
 
-
-
-            #for ship in self._first_player_board:
-                #for ship_coord in ship:
-                    #if coord == ship_coord:
-                        #return False
-
-
     def get_current_state(self):
         """
         Takes no parameters
@@ -329,7 +323,45 @@ class ShipGame:
 
         True - if torpedo is fired and recorded
         """
-        pass
+        # Check to see if correct player turn
+        print("Players turn is: " + self.get_players_turn())
+        if player != self.get_players_turn():
+            print("Not your turn!")
+            return False
+
+        # Check to see if coord is in second player board
+        if player == 'first':
+            element_counter_one = 0
+            element_counter_two = 0
+            for ship in self._second_player_board:
+                for ship_coord in ship:
+                    if coord == ship_coord:
+                        del self._second_player_board[element_counter_one][element_counter_two]
+                        self._players_turn = 'second'
+                        if len(self._second_player_board) == 0:
+                            self._current_state = 'FIRST_WON'
+                        return True
+                    element_counter_two += 1
+                element_counter_one += 1
+
+
+        # Check to see if coord is in first player board
+        if player == 'second':
+            element_counter_one = 0
+            element_counter_two = 0
+            for ship in self._first_player_board:
+                for ship_coord in ship:
+                    if coord == ship_coord:
+                        del self._second_player_board[element_counter_one][element_counter_two]
+                        self._players_turn = 'first'
+                        if len(self._first_player_board) == 0:
+                            self._current_state = 'SECOND_WON'
+                        return True
+                    element_counter_two += 1
+                element_counter_one += 1
+
+        return False
+
 
     def get_num_ships_remaining(self, player):
         """
@@ -356,14 +388,17 @@ class ShipGame:
 def main():
 
     game = ShipGame()
-    print(game.get_players_turn())
     print(game.get_current_state())
     print(game.place_ship('first', 5, 'C2', 'R'))
     print(game.place_ship('second', 4, 'B1', 'R'))
     print(game.place_ship('first', 3, 'E2', 'C'))
     print(game.place_ship('second', 3, 'J1', 'C'))
+    print(game.place_ship('first', 4, 'F2', 'R'))
     print(game.get_num_ships_remaining('first'))
     print(game.get_num_ships_remaining('second'))
+    print(game.fire_torpedo('first', 'B1'))
+    print(game.get_second_player_board())
+    print(game.get_players_turn())
 
 if __name__ == '__main__':
     main()
