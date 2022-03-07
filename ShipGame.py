@@ -91,7 +91,7 @@ class ShipGame:
         if player == 'first':
             col_num = ''
             dict_of_values = {}
-            # Checking to see if ship is longer than
+            # Check to see if ship is longer than
             # the board or if the ship is too short
             if ship_length > 10 or ship_length < 2:
                 return False
@@ -107,19 +107,93 @@ class ShipGame:
                         col_num = 10
                         if col_num + ship_length > 10:
                             return False
-            elif orientation == 'C':
-                dict_of_values = {A:1, B:2, C:3, D:4, E:5, F:6, G:7, H:8, I:9, J:10}
+            if orientation == 'C':
+                dict_of_values = {'A':1, 'B':2, 'C':3, 'D':4, 'E':5, 'F':6, 'G':7, 'H':8, 'I':9, 'J':10}
                 row_num = coord[0]
                 if row_num in dict_of_values:
                     value = dict_of_values.get(row_num)
                     if value + ship_length > 10:
                         return False
+
+            # Check for overlap using coordinate
+            for ship in self._first_player_board:
+                for ship_coord in ship:
+                    if coord == ship_coord:
+                        return False
+
+            # Check for overlap using other coordinates
+            # based on ship_length and ship orientation
+            # as column
+            if orientation == 'C':
+                coord_to_check = [coord]
+                counter = ship_length - 1
+                letter = coord[0]
+                temp_letter = letter
+                digit_to_nine = coord[1]
+                if len(coord) == 3:
+                    digit_ten = coord[1] + coord[2]
+                if len(coord) == 2:
+                    while counter > 0:
+                        temp_letter = chr(ord(temp_letter) + 1)
+                        check_coord = temp_letter + digit_to_nine
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                if len(coord) == 3:
+                    while counter > 0:
+                        temp_letter = chr(ord(letter) + 1)
+                        check_coord = temp_letter + digit_ten
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                # Check each coordinate in first player board
+                # for overlaps
+                for coord in coord_to_check:
+                    for ship in self._first_player_board:
+                        for element in ship:
+                            if coord == element:
+                                return False
+
+            # Check for overlap using other coordinates
+            # based on ship_length and ship orientation
+            # as row
+            if orientation == 'R':
+                coord_to_check = [coord]
+                counter = ship_length - 1
+                letter = coord[0]
+                number = coord[1]
+                temp_number = number
+                digit_to_nine = coord[1]
+                if len(coord) == 3:
+                    digit_ten = coord[1] + coord[2]
+                if len(coord) == 2:
+                    while counter > 0:
+                        temp_number = int(temp_number) + 1
+                        check_coord = letter + str(temp_number)
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                if len(coord) == 3:
+                    while counter > 0:
+                        temp_number = int(temp_number) + 1
+                        check_coord = letter + str(temp_number)
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                # Check each coordinate in first player board
+                # for overlaps
+                for coord in coord_to_check:
+                    for ship in self._first_player_board:
+                        for element in ship:
+                            if coord == element:
+                                return False
+
+            # Add ship to first player board
+            self._first_player_board.append(coord_to_check)
+            print(self._first_player_board)
+            return True
 
         # Check second player board
-        elif player == 'second':
+        if player == 'second':
             col_num = ''
             dict_of_values = {}
-            # Checking to see if ship is longer than
+            # Check to see if ship is longer than
             # the board or if the ship is too short
             if ship_length > 10 or ship_length < 2:
                 return False
@@ -136,16 +210,79 @@ class ShipGame:
                         if col_num + ship_length > 10:
                             return False
             elif orientation == 'C':
-                dict_of_values = {A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8, I: 9, J: 10}
+                dict_of_values = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9, 'J': 10}
                 row_num = coord[0]
                 if row_num in dict_of_values:
                     value = dict_of_values.get(row_num)
                     if value + ship_length > 10:
                         return False
 
-        # Ch
+        # Check for overlap
+            for ship in self._second_player_board:
+                for ship_coord in ship:
+                    if coord == ship_coord:
+                        return False
 
-        return True
+        # Check for overlap using other coordinates
+        # based on ship_length
+            if orientation == 'C':
+                coord_to_check = [coord]
+                counter = ship_length - 1
+                letter = coord[0]
+                digit_to_nine = coord[1]
+                temp_letter = letter
+                if len(coord) == 3:
+                    digit_ten = coord[1] + coord[2]
+                if len(coord) == 2:
+                    while counter > 0:
+                        temp_letter = chr(ord(temp_letter) + 1)
+                        check_coord = temp_letter + digit_to_nine
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                if len(coord) == 3:
+                    while counter > 0:
+                        temp_letter = chr(ord(letter) + 1)
+                        check_coord = temp_letter + digit_ten
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                # Check each coordinate in first player board
+                # for overlaps
+                for coord in coord_to_check:
+                    for ship in self._second_player_board:
+                        for element in ship:
+                            if coord == element:
+                                return False
+
+            # Check for overlap using other coordinates
+            # based on ship_length and ship orientation
+            # as row
+            if orientation == 'R':
+                coord_to_check = [coord]
+                counter = ship_length - 1
+                letter = coord[0]
+                number = coord[1]
+                temp_number = number
+                digit_to_nine = coord[1]
+                if len(coord) == 3:
+                    digit_ten = coord[1] + coord[2]
+                if len(coord) == 2:
+                    while counter > 0:
+                        temp_number = int(temp_number) + 1
+                        check_coord = letter + str(temp_number)
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+                if len(coord) == 3:
+                    while counter > 0:
+                        temp_number = int(temp_number) + 1
+                        check_coord = letter + str(temp_number)
+                        coord_to_check.append(check_coord)
+                        counter -= 1
+            # Add ship to second player board
+            self._second_player_board.append(coord_to_check)
+            print(self._second_player_board)
+            return True
+
+
 
             #for ship in self._first_player_board:
                 #for ship_coord in ship:
@@ -210,16 +347,23 @@ class ShipGame:
         Returns the number of ships that are left on the specified
         player's grid
         """
-        pass
+        if player == 'first':
+            return len(self._first_player_board)
+
+        if player == 'second':
+            return len(self._second_player_board)
 
 def main():
 
     game = ShipGame()
-    print(game.get_first_player_board())
-    print(game.get_second_player_board())
     print(game.get_players_turn())
     print(game.get_current_state())
-    print(game.place_ship('second', 3, 'A1', 'R'))
+    print(game.place_ship('first', 5, 'C2', 'R'))
+    print(game.place_ship('second', 4, 'B1', 'R'))
+    print(game.place_ship('first', 3, 'E2', 'C'))
+    print(game.place_ship('second', 3, 'J1', 'C'))
+    print(game.get_num_ships_remaining('first'))
+    print(game.get_num_ships_remaining('second'))
 
 if __name__ == '__main__':
     main()
