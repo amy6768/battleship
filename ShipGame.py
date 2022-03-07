@@ -33,7 +33,31 @@ class ShipGame:
         players_turn - initializes to 'first'
 
         """
-        pass
+        self._first_player_board = []
+        self._second_player_board = []
+        self._current_state = 'UNFINISHED'
+        self._players_turn = 'first'
+
+    def get_first_player_board(self):
+        """
+        Returns the first player's board
+        """
+
+        return self._first_player_board
+
+    def get_second_player_board(self):
+        """
+        Returns the second player's board
+        """
+
+        return self._second_player_board
+
+    def get_players_turn(self):
+        """
+        Returns which player's turn it is
+        """
+
+        return self._players_turn
 
     def place_ship(self, player, ship_length, coord, orientation):
         """
@@ -63,7 +87,71 @@ class ShipGame:
         True - ship is placed on board after criteria is checked
 
         """
-        pass
+        # Check first player board
+        if player == 'first':
+            col_num = ''
+            dict_of_values = {}
+            # Checking to see if ship is longer than
+            # the board or if the ship is too short
+            if ship_length > 10 or ship_length < 2:
+                return False
+            # Checking to see if ship fits entirely
+            # on the board
+            if orientation == 'R':
+                if len(coord) == 2:
+                    col_num = coord[1]
+                    if (int(col_num) + ship_length) > 10:
+                        return False
+                elif len(coord) == 3:
+                    if coord[1] == 1 and coord[2] == 0:
+                        col_num = 10
+                        if col_num + ship_length > 10:
+                            return False
+            elif orientation == 'C':
+                dict_of_values = {A:1, B:2, C:3, D:4, E:5, F:6, G:7, H:8, I:9, J:10}
+                row_num = coord[0]
+                if row_num in dict_of_values:
+                    value = dict_of_values.get(row_num)
+                    if value + ship_length > 10:
+                        return False
+
+        # Check second player board
+        elif player == 'second':
+            col_num = ''
+            dict_of_values = {}
+            # Checking to see if ship is longer than
+            # the board or if the ship is too short
+            if ship_length > 10 or ship_length < 2:
+                return False
+            # Checking to see if ship fits entirely
+            # on the board
+            if orientation == 'R':
+                if len(coord) == 2:
+                    col_num = coord[1]
+                    if (int(col_num) + ship_length) > 10:
+                        return False
+                elif len(coord) == 3:
+                    if coord[1] == 1 and coord[2] == 0:
+                        col_num = 10
+                        if col_num + ship_length > 10:
+                            return False
+            elif orientation == 'C':
+                dict_of_values = {A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8, I: 9, J: 10}
+                row_num = coord[0]
+                if row_num in dict_of_values:
+                    value = dict_of_values.get(row_num)
+                    if value + ship_length > 10:
+                        return False
+
+        # Ch
+
+        return True
+
+            #for ship in self._first_player_board:
+                #for ship_coord in ship:
+                    #if coord == ship_coord:
+                        #return False
+
 
     def get_current_state(self):
         """
@@ -81,7 +169,7 @@ class ShipGame:
        'UNFINISHED' - returns this string if the game is unfinished
 
         """
-        pass
+        return self._current_state
 
     def fire_torpedo(self, player, coord,):
         """
@@ -123,3 +211,15 @@ class ShipGame:
         player's grid
         """
         pass
+
+def main():
+
+    game = ShipGame()
+    print(game.get_first_player_board())
+    print(game.get_second_player_board())
+    print(game.get_players_turn())
+    print(game.get_current_state())
+    print(game.place_ship('second', 3, 'A1', 'R'))
+
+if __name__ == '__main__':
+    main()
