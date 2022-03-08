@@ -1,11 +1,17 @@
-# Name: Amy Lee
-# Course: CS162
+# Author: Amy Lee
+# GitHub Username: amy6768
+# Date: March 7, 2022
+# Description: Portfolio Project -
+#  The ShipGame class allows two people to play the
+#  game of Battleship. Each player has their own grid
+#  that is 10x10 in size. They place their ships on
+#  the grid and take turns firing torpedoes at their
+#  enemy's grid. The first torpedo is fired by
+#  'first' player. A ship is considered sunk when
+#  all of its squares on the grid have been hit.
+#  Whoever sinks all of their opponent's ships
+#  is the winner of the game.
 
-# HALFWAY PROGRESS REPORT
-
-# I am writing class called ShipGame. Within this class is
-# code that allows two people to play the classic game
-# of Battleship.
 
 class ShipGame:
     """
