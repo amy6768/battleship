@@ -335,6 +335,7 @@ class ShipGame:
 
         # Check to see if coord is in second player board
         if player == 'first':
+            self._players_turn = 'second'
             element_counter_one = 0
             element_counter_two = 0
             for ship in self._second_player_board:
@@ -351,6 +352,7 @@ class ShipGame:
 
         # Check to see if coord is in first player board
         if player == 'second':
+            self._players_turn = 'first'
             element_counter_one = 0
             element_counter_two = 0
             for ship in self._first_player_board:
@@ -399,8 +401,9 @@ def main():
     print(game.place_ship('first', 8, 'H2', 'R'))
     print(game.get_second_player_board())
     print(game.fire_torpedo('first', 'H3'))
-    print("before torpedo attempt: " + str(game.get_second_player_board()))
-    #print(game.fire_torpedo('second', 'A1'))
+    print("Players turn is: " + str(game.get_players_turn()))
+    print("before torpedo attempt: " + str(game.get_first_player_board()))
+    print(game.fire_torpedo('second', 'A1'))
     print(game.get_current_state())
 
 if __name__ == '__main__':
